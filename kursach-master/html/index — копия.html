@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <title>Tree</title>    
+    <script src="../js/fordFulkerson.js"></script>    
+    <script src="../js/jquery-1.11.3.min.js"></script>  
+    <script src="../js/vis.min.js"></script>
+    <link href="../js/vis.min.css " rel="stylesheet" type="text/css"/> 
+    
+   
+   <style type="text/css">
+    #mynetwork {
+      width: 600px;
+      height: 400px;
+      border: 1px solid lightgray;
+    }
+    p {
+      max-width:600px;
+    }
+    body {
+        font-size: 50px;
+    }
+  </style>
+</head>
+<body>  
+
+<div id="mynetwork"></div>
+
+    <script type="text/javascript">
+      // create an array with nodes
+      var nodes = [
+        {id: 'S', label: 'S'},
+        {id: 'O', label: 'O'},
+        {id: 'P', label: 'P'},
+        {id: 'R', label: 'R'},
+        {id: 'T', label: 'T'},
+        {id: 'Q', label: 'Q'}
+      ];
+
+      // create an array with edges
+      var edges = [
+        {from: 'S', to: 'O', arrows:'to', label: '3', font: {align: '3'}},
+        {from: 'S', to: 'P', arrows:'to', label: '3', font: {align: '3'}},
+        {from: 'O', to: 'P', arrows:'to', label: '2', font: {align: '2'}},
+        {from: 'O', to: 'Q', arrows:'to', label: '3', font: {align: '3'}},
+        {from: 'P', to: 'R', arrows:'to', label: '2', font: {align: '2'}},
+        {from: 'R', to: 'T', arrows:'to', label: '3', font: {align: '3'}},
+        {from: 'Q', to: 'R', arrows:'to', label: '4', font: {align: '4'}},
+        {from: 'Q', to: 'T', arrows:'to', label: '2', font: {align: '2'}},
+      ];
+
+      // create a network
+      var container = document.getElementById('mynetwork');
+      var data = {
+        nodes: nodes,
+        edges: edges
+      };
+      var options = {clickToUse: true, layout:{randomSeed: 11} };
+
+      var network = new vis.Network(container, data, options);
+network.setOptions(options);
+      var fn = new FlowNetwork();
+        fn.addEdge('S','O',3);
+        fn.addEdge('S','P',3);
+        fn.addEdge('O','P',2);
+        fn.addEdge('O','Q',3);
+        fn.addEdge('P','R',2);
+        fn.addEdge('R','T',3);
+        fn.addEdge('Q','R',4);
+        fn.addEdge('Q','T',2);
+        var max = fn.maxFlow('S','T');
+        console.log(max);
+       
+        $("body").append("Max flow is: " + max);
+        $("body").append("<input type=\"button\" value=\"test\">  ");
+
+    </script>
+
+   
+</body>
+</html>
